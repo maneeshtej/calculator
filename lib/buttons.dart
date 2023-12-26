@@ -1,12 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final String buttonText;
+  // ignore: prefer_typing_uninitialized_variables
   final buttonTapped;
 
-  const Button({required this.buttonText, this.buttonTapped});
+  const Button({super.key, required this.buttonText, this.buttonTapped});
 
   @override
   Widget build(BuildContext context) {
