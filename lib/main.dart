@@ -34,12 +34,15 @@ class _MyHomePageState extends State<MyHomePage> {
     if (x == "C") {
       setState(() {
         userQuestion = "";
-        userAnswer = "";
+        userAnswer = "0";
       });
     } else if (x == "DEL") {
       setState(() {
+        if (userQuestion == "Enter an expression") {
+          userQuestion = "";
+        }
         userQuestion = userQuestion.substring(0, userQuestion.length - 1);
-        userAnswer = "";
+        userAnswer = "0";
       });
     } else if (x == "=") {
       setState(() {
@@ -53,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   var userQuestion = "";
-  var userAnswer = "";
+  var userAnswer = "0";
   final List<String> buttons = [
     "C",
     "DEL",
@@ -104,8 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     userAnswer,
-                    style: const TextStyle(
-                      fontSize: 40,
+                    style: TextStyle(
+                      fontSize: 60,
+                      color: (userAnswer == "0")
+                          ? const Color.fromARGB(255, 119, 119, 119)
+                          : Colors.black,
                     ),
                   ),
                 )
@@ -114,18 +120,28 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Expanded(
             flex: 2,
-            child: GridView.builder(
-              itemCount: buttons.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4),
-              itemBuilder: (BuildContext context, int index) {
-                return Button(
-                  buttonText: buttons[index],
-                  buttonTapped: () {
-                    buttonTapped(buttons[index]);
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(5),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: GridView.builder(
+                  itemCount: buttons.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Button(
+                      buttonText: buttons[index],
+                      buttonTapped: () {
+                        buttonTapped(buttons[index]);
+                      },
+                    );
                   },
-                );
-              },
+                ),
+              ),
             ),
           ),
         ],
